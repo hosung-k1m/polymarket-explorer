@@ -1,3 +1,33 @@
-fn main() {
-    println!("Hello, world!");
+mod cli;
+mod standard_data;
+mod adapters;
+mod data_sources;
+
+use clap::Parser;
+use cli::{CLI, handle_analyze};
+use adapters::HttpClient;
+use data_sources::PolymarketApiSource;
+
+#[tokio::main]
+async fn main() {
+    // run and parse slug or error
+    if let Err(e) = run().await {
+        eprintln!("Error: {}", e);
+        std::process::exit(1);
+    }
+}
+
+async fn run() -> anyhow::Result<()> {
+    // parse
+    let cli = CLI::parse();
+
+    // create http cleint
+    let http_client = HttpClient::new();
+
+    // make polymarket api source
+    let market_provider = PolymarketApiSource::new(http_client);
+
+    // run
+    handle_analyze(&cli.market_slug, &market_provider).await
+    
 }
