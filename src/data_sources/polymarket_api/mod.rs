@@ -3,7 +3,7 @@ mod standardizer;
 mod types;
 
 use crate::adapters::HttpClient;
-use crate::standard_data::models::Market;
+use crate::standard_data::models::MarketGroup;
 use crate::standard_data::providers::MarketMetadataProvider;
 use anyhow::Result;
 use async_trait::async_trait;
@@ -25,13 +25,13 @@ impl PolymarketApiSource {
 
 #[async_trait]
 impl MarketMetadataProvider for PolymarketApiSource {
-    async fn get_market(&self, slug: &str) -> Result<Market> {
+    async fn get_market_group(&self, slug: &str) -> Result<MarketGroup> {
         // get raw data from handler
-        let raw = self.handler.fetch_market(slug).await?;
+        let raw = self.handler.fetch_market_group(slug).await?;
         // standardize the data from source
         println!("{:#?}", raw);
-        let market = PolymarketApiStandardizer::standardize_market(raw)?;
+        let market_group = PolymarketApiStandardizer::standardize_market_group(raw)?;
 
-        Ok(market)
+        Ok(market_group)
     }
 }

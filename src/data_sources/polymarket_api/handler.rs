@@ -1,5 +1,5 @@
 use crate::adapters::HttpClient;
-use crate::data_sources::polymarket_api::types::GammaMarketResponse;
+use crate::data_sources::polymarket_api::types::GammaMarketGroupResponse;
 use anyhow::Result;
 
 const GAMMA_API_URL: &str = "https://gamma-api.polymarket.com";
@@ -15,7 +15,7 @@ impl PolymarketApiHandler {
     }
 
     // get market data from gamma api
-    pub async fn fetch_market(&self, slug: &str) -> Result<GammaMarketResponse> {
+    pub async fn fetch_market_group(&self, slug: &str) -> Result<GammaMarketGroupResponse> {
         let url = format!("{}/events/slug/{}", GAMMA_API_URL, slug);
         self.http_client.get(&url).await
     }

@@ -9,14 +9,22 @@ pub async fn handle_analyze<T: MarketMetadataProvider>(
 ) -> Result<()> {
     // get market info
     output::print_header(&format!("Fetching market: {}", market_slug));
-    let market = market_provider.get_market(market_slug).await?;
+    let market_group = market_provider.get_market_group(market_slug).await?;
     
     // display market info
-    output::print_market_info(&market);
+    output::print_market_group_info(&market_group);
     
-    // TODO: will have stats 
-    output::print_header("ANALYSIS");
-    println!("will have soon");
+    // TODO: change here for deciding what market to analyse right now just first
+    if let Some(first_market) = market_group.markets.first() {
+        output::print_header("ANALYZING PRIMARY MARKET");
+        output::print_market_info(first_market);
+        
+        // TODO: Fetch positions and calculate statistics
+        output::print_header("ANALYSIS");
+        println!("something will be here soon");
+    } else {
+        println!("  No markets found in this group\n");
+    }
     
     Ok(())
 }
