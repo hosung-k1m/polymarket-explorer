@@ -5,7 +5,7 @@ mod types;
 use crate::adapters::HttpClient;
 use crate::standard_data::models::MarketGroup;
 use crate::standard_data::providers::MarketMetadataProvider;
-use anyhow::Result;
+use crate::error::Result;
 use async_trait::async_trait;
 
 use handler::PolymarketApiHandler;

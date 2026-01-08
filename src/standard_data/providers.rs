@@ -1,5 +1,5 @@
 use crate::standard_data::models::MarketGroup;
-use anyhow::Result;
+use crate::error::Result;
 use async_trait::async_trait;
 
 // interface for market data getter

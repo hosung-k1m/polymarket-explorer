@@ -1,5 +1,5 @@
 use crate::cli::output;
-use anyhow::Result;
+use crate::error::Result;
 use crate::standard_data::providers::MarketMetadataProvider;
 
 // print the results from the market, takes in a marketprovider
